@@ -8,6 +8,7 @@ data = pd.read_csv("data.csv")
 f = plt.figure()
 f.set_figwidth(16)
 f.set_figheight(12)
+list = []
 
 # For loop for each column of the csv file
 for i in range(1, len(data.columns)):
@@ -21,9 +22,12 @@ for i in range(1, len(data.columns)):
     Q1outlier = Q1 - 1.5 * IQR
     Q3outlier = Q3 + 1.5 * IQR
     print("Outliers for " + data.columns[i] + ":")
-
-
+    # Add title and axis names
+    plt.title("Star Wars Character Searches by Month")
+    plt.xlabel("Date")
+    plt.ylabel("Topic's search proportion to all topics on Google")
     for j in range(len(data["Date"])): #For loop going through each date in the columns
+        list.append(data.loc[j, data.columns[i]])
         total+=data.loc[j, data.columns[i]] # Calculating total for mean
         #Printing outliers
         if data.loc[j, data.columns[i]] > Q3outlier or data.loc[j, data.columns[i]] < Q1outlier:
@@ -43,5 +47,18 @@ for i in range(1, len(data.columns)):
 print(data, "\n")
 # Setting legends for the lines
 plt.legend(loc="upper right", bbox_to_anchor=(0.15, 1.15), ncol=2)
-#Visualizing the plot
+
+
+#Creating plot figure
+fig = plt.figure(figsize=(16, 12))
+
+# Creating axes instance
+ax = fig.add_axes([0, 0, 1, 1])
+
+# Creating plot
+ax = plt.subplot()
+ax.set_title("Star Wars Character Searches Boxplot")
+ax.boxplot(list)
+
+# show plot
 plt.show()
