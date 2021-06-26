@@ -58,6 +58,7 @@ ax = fig.add_axes([0, 0, 1, 1])
 # Creating plot
 ax = plt.subplot()
 ax.set_title("Star Wars Character Searches Boxplot")
+ax.set_ylabel("Topic's search proportion to all topics on Google")
 ax.boxplot(list)
 
 # show plot
