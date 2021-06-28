@@ -25,8 +25,9 @@ for i in range(len(data[data.columns[0]])):
     for j in dict:
         if data.loc[i, data.columns[0]] >= j and data.loc[i, data.columns[0]] <= j+10:
             dict[j]=dict[j]+1
-
-for i in dict:
+list=list(dict)
+list.sort()
+for i in list:
     plt.bar(str(i)+"-"+str(i+10), dict[i])
 
 plt.xlabel("Grade ranges")
