@@ -4,7 +4,7 @@ from matplotlib import pyplot as plt
 import math
 
 # variables
-data = pd.read_csv("data.csv")
+data = pd.read_csv("star_wars.csv")
 f = plt.figure()
 f.set_figwidth(16)
 f.set_figheight(12)
