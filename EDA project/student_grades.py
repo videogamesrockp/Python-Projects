@@ -34,4 +34,12 @@ plt.xlabel("Grade ranges")
 plt.ylabel("Number of students")
 plt.title("Student grade ranges")
 
+fig = plt.figure(figsize=(16, 12))
+ax = fig.add_axes([0, 0, 1, 1])
+ax = plt.subplot()
+ax.set_title("Star Wars Character Searches Boxplot")
+ax.set_ylabel("Topic's search proportion to all topics on Google")
+
+ax.boxplot(data)
+
 plt.show()
