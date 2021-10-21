@@ -4,7 +4,7 @@ import base64
 from Crypto.Cipher import AES
 import json
 
-cnx = mysql.connector.connect(user='root', password='iamdby',
+cnx = mysql.connector.connect(user='root', password='***************',
                               host='192.168.1.21',
                               database='employees')
 
