@@ -35,7 +35,7 @@ for result in results:
     decrypted = decrypt(result[1], result[2])
     json_data[result[1]] = decrypted.rstrip()
 
-os.chdir("C://Users/foras/PycharmProjects/Python-Projects")
+os.chdir("/")
 
 with open ("test.json", "r+") as f:
     f.truncate(0)
