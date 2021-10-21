@@ -1,35 +1,46 @@
-from Crypto.Cipher import AES
-import hashlib
+import os
+import mysql.connector
 import base64
+from Crypto.Cipher import AES
+import json
 
-passphrase = "kristi"
-content = "kristi"
-print(passphrase, content)
+cnx = mysql.connector.connect(user='root', password='iamdby',
+                              host='192.168.1.21',
+                              database='employees')
 
-mode = AES.MODE_CBC
-bs = AES.block_size
+mycursor = cnx.cursor()
 
-# encrypting
-key = md5(passphrase.encode('utf-8')).hexdigest().encode('utf-8')
-body = Padding.pad(content.encode('utf-8'), bs)
-iv = key[8:bs+8]
+files = os.listdir("C://keyiv")
+os.chdir("C://keyiv")
+filedict = {}
 
-cipher = AES.new(key, mode, iv)
-key = b64encode(key).decode('utf-8')
-body = b64encode(cipher.encrypt(body)).decode('utf-8')
-iv = b64encode(iv).decode('utf-8')
+for file in files:
+    with open(file, "r") as f:
+        text = f.read()
+        filedict[file.rstrip(".txt")] = text.split()
 
-result = "%s.%s.%s" % (key, body, iv)
-print(result)
+def decrypt(encrypt, file_name):
+    key = filedict.get(file_name)[0]
+    iv = filedict.get(file_name)[1]
+    iv = base64.b64decode(iv)
+    key = base64.b64decode(key)
+    cipher = AES.new(key, AES.MODE_CBC, iv)
+    result = cipher.decrypt(base64.b64decode(encrypt))
+    return result.decode()
 
+mycursor.execute("SELECT * FROM decryptiontable")
+results = mycursor.fetchall()
+json_data={}
+for result in results:
+    decrypted = decrypt(result[1], result[2])
+    json_data[result[1]] = decrypted.rstrip()
 
-# decrypting
-key, body, iv = result.split(".")
-key = b64decode(key.encode('utf-8'))
-body = b64decode(body.encode('utf-8'))
-iv = b64decode(iv.encode('utf-8'))
-cipher = AES.new(key, mode, iv)
+os.chdir("C://Users/foras/PycharmProjects/Python-Projects")
 
-body = Padding.unpad(cipher.decrypt(body), bs).decode('utf-8')
+with open ("test.json", "r+") as f:
+    f.truncate(0)
 
-print(body)
+with open("test.json", "w") as f:
+    json.dump(json_data, f, indent=4, separators=(", ", ": "), sort_keys=True, default=str)
+
+cnx.close()
