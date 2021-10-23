@@ -37,10 +37,10 @@ for result in results:
 
 os.chdir("/")
 
-with open ("test.json", "r+") as f:
+with open ("main.json", "r+") as f:
     f.truncate(0)
 
-with open("test.json", "w") as f:
+with open("main.json", "w") as f:
     json.dump(json_data, f, indent=4, separators=(", ", ": "), sort_keys=True, default=str)
 
 cnx.close()
