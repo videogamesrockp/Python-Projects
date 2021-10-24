@@ -20,11 +20,4 @@ for result in results:
 with open("dept.json", "w") as write_file:
     json.dump(json_data, write_file, indent=4, separators=(", ", ": "), sort_keys=True, default=str)
 
-with open('dept.json', "r") as data:
-    dataset = json.load(data)
-    print(dataset)
-    for manager in dataset:
-        manager_name = manager['first_name'] + " " + manager['last_name']
-        mycursor.execute("insert into dept_manager_test (dept_name, manager_name) VALUES (%s, %s)", (manager['dept_name'], manager_name))
-
 cnx.close()
