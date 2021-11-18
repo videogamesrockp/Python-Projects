@@ -21,8 +21,6 @@ for  i in results:
     e = employee(i[0], i[1], i[2])
     dept1.emp_list.append(e)
 
-with open("main.json", "r+") as f:
-    f.truncate(0)
 
 with open("main.json", "w") as f:
     deptJSON = jsonpickle.encode(dept1, unpicklable=False)
